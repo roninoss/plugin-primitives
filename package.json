@@ -1,0 +1,41 @@
+{
+  "name": "plugin-pro-primitives",
+  "version": "0.0.1",
+  "description": "A library for Expo config plugins",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc --emitDeclarationOnly && babel src --out-dir build --extensions \".ts\" --source-maps --ignore \"src/**/__mocks__/*\",\"src/**/__tests__/*\",\"src/**/__integration_tests__/*\"",
+    "clean": "expo-module clean",
+    "lint": "expo-module lint",
+    "prepare": "expo-module clean && yarn run build",
+    "prepublishOnly": "expo-module prepublishOnly",
+    "test": "expo-module test",
+    "typecheck": "expo-module typecheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/"
+  },
+  "keywords": [
+    "json",
+    "expo",
+    "react-native",
+    "react"
+  ],
+  "license": "MIT",
+  "files": [
+    "build"
+  ],
+  "dependencies": {
+    "@expo/config-types": "^51.0.0-unreleased"
+  },
+  "devDependencies": {
+    "expo-module-scripts": "^3.3.0",
+    "expo-modules-core": "^1.12.20"
+  },
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  }
+}
