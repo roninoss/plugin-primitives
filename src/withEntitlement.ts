@@ -185,7 +185,7 @@ type WithEntitlementsParams =
       value: string[];
     };
 
-export const withEntitlements: ConfigPlugin<WithEntitlementsParams> = (
+export const withEntitlement: ConfigPlugin<WithEntitlementsParams> = (
   config,
   { key, value }
 ) => {
@@ -199,10 +199,3 @@ export const withEntitlements: ConfigPlugin<WithEntitlementsParams> = (
 
   return config;
 };
-
-// in order to get key to be human readable, change the keys in the type to be more human readable
-// and then have a mapping to the actual entitlement key
-withEntitlements({} as any, {
-  key: "com.apple.developer.ubiquity-kvstore-identifier",
-  value: "production",
-});

@@ -1,5 +1,9 @@
-export { withAppVisibility } from "./withAppVisibility";
-export { withEntitlements } from "./withEntitlements";
+export { withAndroidManifest } from "./withAndroidManifest";
+export { withColorValue } from "./withColorValue";
+export { withEntitlement } from "./withEntitlement";
 export { withInfoPlist } from "./withInfoPlist";
-export { withPermissions } from "./withPermissions";
-export { withPodfile } from "./withPodfile";
+export { withModifyFile } from "./withModifyFile";
+export { withResourceFile } from "./withResourceFile";
+export { withSourceFile } from "./withSourceFile";
+export { withStringValue } from "./withStringValue";
+export { withRemoveFile } from "./withRemoveFile";

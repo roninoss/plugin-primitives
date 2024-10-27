@@ -4,7 +4,7 @@
   "description": "A library for Expo config plugins",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc --emitDeclarationOnly && babel src --out-dir build --extensions \".ts\" --source-maps --ignore \"src/**/__mocks__/*\",\"src/**/__tests__/*\",\"src/**/__integration_tests__/*\"",
+    "build": "tsc",
     "clean": "expo-module clean",
     "lint": "expo-module lint",
     "prepare": "expo-module clean && yarn run build",
@@ -30,8 +30,10 @@
     "@expo/config-types": "^51.0.0-unreleased"
   },
   "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
     "expo-module-scripts": "^3.3.0",
-    "expo-modules-core": "^1.12.20"
+    "expo-modules-core": "^1.12.20",
+    "fs-extra": "^11.2.0"
   },
   "peerDependencies": {
     "expo": "*",

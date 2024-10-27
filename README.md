@@ -63,3 +63,14 @@ withPodfile(config, {
   to: "target 'MyApp' do",
 });
 ```
+
+### `withSourceFile` 🍎
+
+Apply modifications to a source file.
+
+```javascript
+withSourceFile(config, {
+  file: "AppDelegate.m",
+});
+```
+

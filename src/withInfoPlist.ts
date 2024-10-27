@@ -14,26 +14,35 @@ type InterfaceOrientation =
   | "UIInterfaceOrientationLandscapeLeft"
   | "UIInterfaceOrientationLandscapeRight";
 type WithEnvironmentVariablesParams =
-  | { key: "UIStatusBarHidden"; value: boolean }
-  | { key: "UIStatusBarStyle"; value: string }
-  | { key: "UILaunchStoryboardName"; value: string | "SplashScreen" }
-  | { key: "CFBundleShortVersionString"; value: string }
-  | { key: "CFBundleVersion"; value: string }
-  | { key: "CFBundleDisplayName"; value: string }
-  | { key: "CFBundleIdentifier"; value: string }
-  | { key: "CFBundleName"; value: string }
-  | { key: "CFBundleURLTypes"; value: URLScheme[] }
-  | { key: "CFBundleDevelopmentRegion"; value: string }
-  | { key: "ITSAppUsesNonExemptEncryption"; value: boolean }
-  | { key: "LSApplicationQueriesSchemes"; value: string[] }
-  | { key: "UIBackgroundModes"; value: string[] }
-  | { key: "UISupportedInterfaceOrientations"; value: InterfaceOrientation[] }
-  | { key: "GMSApiKey"; value: string }
-  | { key: "GADApplicationIdentifier"; value: string }
-  | { key: "UIUserInterfaceStyle"; value: InterfaceStyle }
-  | { key: "UIRequiresFullScreen"; value: boolean }
-  | { key: "SKAdNetworkItems"; value: { SKAdNetworkIdentifier: string }[] }
-  | { key: "branch_key"; value: { live?: string } };
+  | { key: "UIStatusBarHidden" | (string & {}); value: boolean }
+  | { key: "UIStatusBarStyle" | (string & {}); value: string }
+  | {
+      key: "UILaunchStoryboardName" | (string & {});
+      value: string | "SplashScreen";
+    }
+  | { key: "CFBundleShortVersionString" | (string & {}); value: string }
+  | { key: "CFBundleVersion" | (string & {}); value: string }
+  | { key: "CFBundleDisplayName" | (string & {}); value: string }
+  | { key: "CFBundleIdentifier" | (string & {}); value: string }
+  | { key: "CFBundleName" | (string & {}); value: string }
+  | { key: "CFBundleURLTypes" | (string & {}); value: URLScheme[] }
+  | { key: "CFBundleDevelopmentRegion" | (string & {}); value: string }
+  | { key: "ITSAppUsesNonExemptEncryption" | (string & {}); value: boolean }
+  | { key: "LSApplicationQueriesSchemes" | (string & {}); value: string[] }
+  | { key: "UIBackgroundModes" | (string & {}); value: string[] }
+  | {
+      key: "UISupportedInterfaceOrientations" | (string & {});
+      value: InterfaceOrientation[];
+    }
+  | { key: "GMSApiKey" | (string & {}); value: string }
+  | { key: "GADApplicationIdentifier" | (string & {}); value: string }
+  | { key: "UIUserInterfaceStyle" | (string & {}); value: InterfaceStyle }
+  | { key: "UIRequiresFullScreen" | (string & {}); value: boolean }
+  | {
+      key: "SKAdNetworkItems" | (string & {});
+      value: { SKAdNetworkIdentifier: string }[];
+    }
+  | { key: "branch_key" | (string & {}); value: { live?: string } };
 
 export const withInfoPlist: ConfigPlugin<WithEnvironmentVariablesParams> = (
   config,
