@@ -48,6 +48,8 @@ function withCustomAssetIos(config: ExpoConfig, props: WithResourceFileProps) {
       props.filePath
     );
 
+    copyFileSync(srcPath, destPath);
+
     const project = config.modResults;
     const groupName = "Assets";
 

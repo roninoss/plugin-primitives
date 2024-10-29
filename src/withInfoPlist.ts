@@ -13,7 +13,7 @@ type InterfaceOrientation =
   | "UIInterfaceOrientationPortraitUpsideDown"
   | "UIInterfaceOrientationLandscapeLeft"
   | "UIInterfaceOrientationLandscapeRight";
-type WithEnvironmentVariablesParams =
+type WithInfoPlistParams =
   | { key: "UIStatusBarHidden" | (string & {}); value: boolean }
   | { key: "UIStatusBarStyle" | (string & {}); value: string }
   | {
@@ -44,7 +44,7 @@ type WithEnvironmentVariablesParams =
     }
   | { key: "branch_key" | (string & {}); value: { live?: string } };
 
-export const withInfoPlist: ConfigPlugin<WithEnvironmentVariablesParams> = (
+export const withInfoPlist: ConfigPlugin<WithInfoPlistParams> = (
   config,
   { key, value }
 ) => {
