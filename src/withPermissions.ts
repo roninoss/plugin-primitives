@@ -2,7 +2,7 @@ import {
   ConfigPlugin,
   withAndroidManifest,
   withInfoPlist,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 
 const permissionMapping = {
   camera: {

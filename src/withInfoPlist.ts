@@ -1,7 +1,7 @@
 import {
   ConfigPlugin,
   withInfoPlist as withInfoPlistExpo,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 
 type InterfaceStyle = "Light" | "Dark" | "Automatic";
 type URLScheme = {

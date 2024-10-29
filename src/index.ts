@@ -7,3 +7,4 @@ export { withResourceFile } from "./withResourceFile";
 export { withSourceFile } from "./withSourceFile";
 export { withStringValue } from "./withStringValue";
 export { withRemoveFile } from "./withRemoveFile";
+export { withPlugins } from "./withPlugins";

@@ -1,4 +1,4 @@
-import { ConfigPlugin, withXcodeProject } from "@expo/config-plugins";
+import { ConfigPlugin, withXcodeProject } from "expo/config-plugins";
 import { existsSync, unlinkSync } from "fs-extra";
 import path from "path";
 

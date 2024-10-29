@@ -1,4 +1,4 @@
-import { ConfigPlugin, withDangerousMod } from "@expo/config-plugins";
+import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
 import fs from "fs";
 import path from "path";

@@ -5,7 +5,7 @@ import {
   IOSConfig,
   withDangerousMod,
   withXcodeProject,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 import { ExpoConfig } from "@expo/config-types";
 import { copyFileSync } from "fs-extra";
 import * as path from "path";

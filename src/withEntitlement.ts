@@ -1,4 +1,4 @@
-import { ConfigPlugin, withEntitlementsPlist } from "@expo/config-plugins";
+import { ConfigPlugin, withEntitlementsPlist } from "expo/config-plugins";
 
 type WithEntitlementsParams =
   | { key: "com.apple.developer.marketplace.app-installation"; value: boolean }

@@ -3,7 +3,7 @@ import {
   ConfigPlugin,
   withAndroidColors,
   withAndroidColorsNight,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 
 export const withColorValue: ConfigPlugin<{
   name: string;

@@ -4,7 +4,7 @@ import {
   AndroidManifest,
   ConfigPlugin,
   withAndroidManifest as withAndroidManifestExpo,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 
 export type ManifestCategory = keyof AndroidManifest["manifest"];
 

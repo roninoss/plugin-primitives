@@ -4,7 +4,7 @@ import {
   withXcodeProject,
   XcodeProject,
   withDangerousMod,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 import path from "path";
 import fs from "fs";
 

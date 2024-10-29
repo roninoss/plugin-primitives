@@ -2,7 +2,7 @@ import {
   AndroidConfig,
   ConfigPlugin,
   withStringsXml,
-} from "@expo/config-plugins";
+} from "expo/config-plugins";
 
 type WithStringValueParams = {
   key: string;
