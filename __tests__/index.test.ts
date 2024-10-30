@@ -74,12 +74,15 @@ describe("Config Plugins", () => {
   describe("withSourceFile", () => {
     it("should add source file to iOS project", async () => {
       const props = {
-        file: "ios/TestFile.swift",
+        filePath: "ios/TestFile.swift",
         contents: "test content",
       };
       await withSourceFile(mockConfig, props);
 
-      expect(fs.writeFileSync).toHaveBeenCalledWith(props.file, props.contents);
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        props.filePath,
+        props.contents
+      );
     });
   });
 

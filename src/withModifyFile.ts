@@ -9,11 +9,16 @@ type WithModifyFileParams =
       newSrc: string;
       anchor: string;
       offset: number;
+      find?: never;
+      replace?: never;
     }
   | {
       filePath: string;
       find: string;
       replace: string;
+      newSrc?: never;
+      anchor?: never;
+      offset?: never;
     };
 
 export const withModifyFile: ConfigPlugin<WithModifyFileParams> = (
@@ -27,7 +32,10 @@ export const withModifyFile: ConfigPlugin<WithModifyFileParams> = (
       let fileContent = fs.readFileSync(params.filePath, "utf8");
 
       if ("find" in params) {
-        fileContent = fileContent.replace(params.find, params.replace);
+        fileContent = fileContent.replace(
+          params?.find ?? "",
+          params?.replace ?? ""
+        );
       } else {
         fileContent = mergeContents({
           tag: "@plugin-pro - modify file",

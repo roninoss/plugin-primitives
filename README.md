@@ -10,26 +10,39 @@ An open source collection of common plugin actions. Fully typed.
 
 ## API
 
-### `withAppVisibility` 🍎 🤖
+### `withColorValue` 🤖
 
-Allows your app to interact with other apps on the device, including to check the existence of an app without explicit permissions.
+Adds a color value to the project.
 
 ```javascript
-withAppVisibility(config, {
-  scheme: "instagram",
-  platforms: ["ios", "android"],
+withColorValue(config, {
+  name: "primaryColor",
+  value: "#000000",
+  colorScheme: "dark",
 });
 ```
 
-### `withPermissions` 🍎 🤖
+### `withAndroidManifest` 🤖
 
-Adds a permission to your app, allowing it to access a specific feature on the device.
+Modify the AndroidManifest.xml file.
 
 ```javascript
-withPermissions(config, {
-  type: "health",
-  reason: "We need access to your health data.",
-  platforms: ["ios", "android"],
+withAndroidManifest(config, {
+  $: { "xmlns:android": "http://schemas.android.com/apk/res/android" },
+  queries: [{ intent: "" }],
+  permission: [{ $: { "android:name": "" } }],
+});
+```
+
+### `withStringValue` 🤖
+
+Adds a string value to the project.
+
+```javascript
+withStringValue(config, {
+  name: "stringName",
+  value: "Hello, world!",
+  translatable: true,
 });
 ```
 
@@ -38,7 +51,10 @@ withPermissions(config, {
 Adds an entitlment to your app, allowing it to access a feature on the device.
 
 ```javascript
-withEntitlements(config, { key: "com.apple.developer.healthkit.access" });
+withEntitlements(config, {
+  key: "com.apple.developer.healthkit.access",
+  value: "yes",
+});
 ```
 
 ### `withInfoPlist` 🍎
@@ -52,25 +68,69 @@ withInfoPlist(config, {
 });
 ```
 
-### `withPodfile` 🍎
+### `withModifyFile` 🤖 🍎
 
-Apply modifications to the Podfile.
+Modify a file by finding and replacing a string.
 
 ```javascript
-withPodfile(config, {
-  action: "append",
-  content: "pod 'HealthKit', '~> 1.0'",
-  to: "target 'MyApp' do",
+withModifyFile(config, {
+  filePath: "AppDelegate.m",
+  find: "something",
+  replace: "something else",
 });
 ```
 
-### `withSourceFile` 🍎
+Or insert a string at a specific anchor and offset.
+
+```javascript
+withModifyFile(config, {
+  filePath: "AppDelegate.m",
+  newSrc: "hello",
+  anchor: "something",
+  offset: 10,
+});
+```
+
+### `withSourceFile` 🤖 🍎
 
 Apply modifications to a source file.
 
 ```javascript
 withSourceFile(config, {
-  file: "AppDelegate.m",
+  filePath: "AppDelegate.m",
 });
 ```
 
+### `withResourceFile` 🤖 🍎
+
+Add a resource file to the project.
+
+```javascript
+withResourceFile(config, {
+  filePath: "android/src/main/res/values/strings2.xml",
+});
+```
+
+### `withRemoveFile` 🤖 🍎
+
+Remove a file from the project.
+
+```javascript
+withRemoveFile(config, {
+  filePath: "path/to/file",
+});
+```
+
+### `withPlugins` 🤖 🍎
+
+Apply multiple plugins to the project.
+
+```javascript
+withPlugins(config, [
+  [withEntitlement, { key: "aps-environment", value: "development" }],
+  [
+    withColorValue,
+    { name: "primaryColor", value: "#000000", colorScheme: "dark" },
+  ],
+]);
+```

@@ -9,7 +9,7 @@ import path from "path";
 import fs from "fs";
 
 export type WithResourcesProps = {
-  file: string;
+  filePath: string;
   contents?: string;
   parallelDir?: string;
 };
@@ -37,12 +37,12 @@ async function getFileContents(
  */
 const withSourceIos: ConfigPlugin<WithResourcesProps> = (
   config,
-  { file, contents, parallelDir }
+  { filePath, contents, parallelDir }
 ) => {
   return withXcodeProject(config, async (config) => {
-    const fileContents = await getFileContents(file, contents, parallelDir);
+    const fileContents = await getFileContents(filePath, contents, parallelDir);
     config.modResults = await setFileInXcodeProjectAsync({
-      file,
+      file: filePath,
       contents: fileContents,
       projectName: config.modRequest.projectName || "",
       project: config.modResults,
@@ -78,13 +78,20 @@ async function setFileInXcodeProjectAsync({
 
 const withSourceAndroid: ConfigPlugin<WithResourcesProps> = (
   config,
-  { file, contents, parallelDir }
+  { filePath, contents, parallelDir }
 ) => {
   return withDangerousMod(config, [
     "android",
     async (config) => {
-      const filepath = path.join(config.modRequest.platformProjectRoot, file);
-      const fileContents = await getFileContents(file, contents, parallelDir);
+      const filepath = path.join(
+        config.modRequest.platformProjectRoot,
+        filePath
+      );
+      const fileContents = await getFileContents(
+        filePath,
+        contents,
+        parallelDir
+      );
       fs.writeFileSync(filepath, fileContents);
       return config;
     },
@@ -95,10 +102,10 @@ export const withSourceFile: ConfigPlugin<WithResourcesProps> = (
   config,
   props
 ) => {
-  if (props.file.includes("ios/")) {
+  if (props.filePath.includes("ios/")) {
     config = withSourceIos(config, props);
   }
-  if (props.file.includes("android/")) {
+  if (props.filePath.includes("android/")) {
     config = withSourceAndroid(config, props);
   }
   return config;
