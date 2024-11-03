@@ -5,12 +5,19 @@ import {
   withAndroidColorsNight,
 } from "expo/config-plugins";
 
-export const withColorValue: ConfigPlugin<{
+/**
+ * 🤖 Android Only
+ *
+ * A config plugin to set colors in Android's colors.xml and colors.xml (night) files.
+ *
+ */
+
+export const withColor: ConfigPlugin<{
   name: string;
   value: string;
-  colorScheme: "light" | "dark";
-}> = (config, { name, value, colorScheme }) => {
-  if (colorScheme === "light") {
+  night: boolean;
+}> = (config, { name, value, night }) => {
+  if (night) {
     config = withAndroidColors(config, (config) => {
       config.modResults = AndroidConfig.Colors.assignColorValue(
         config.modResults,
@@ -22,7 +29,7 @@ export const withColorValue: ConfigPlugin<{
       return config;
     });
   }
-  if (colorScheme === "dark") {
+  if (night) {
     config = withAndroidColorsNight(config, (config) => {
       config.modResults = AndroidConfig.Colors.assignColorValue(
         config.modResults,

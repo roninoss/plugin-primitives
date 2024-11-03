@@ -1,7 +1,4 @@
-import {
-  ConfigPlugin,
-  withInfoPlist as withInfoPlistExpo,
-} from "expo/config-plugins";
+import { ConfigPlugin, withInfoPlist } from "expo/config-plugins";
 
 type InterfaceStyle = "Light" | "Dark" | "Automatic";
 type URLScheme = {
@@ -13,7 +10,7 @@ type InterfaceOrientation =
   | "UIInterfaceOrientationPortraitUpsideDown"
   | "UIInterfaceOrientationLandscapeLeft"
   | "UIInterfaceOrientationLandscapeRight";
-type WithInfoPlistParams =
+type WithInfoParams =
   | { key: "UIStatusBarHidden" | (string & {}); value: boolean }
   | { key: "UIStatusBarStyle" | (string & {}); value: string }
   | {
@@ -44,11 +41,17 @@ type WithInfoPlistParams =
     }
   | { key: "branch_key" | (string & {}); value: { live?: string } };
 
-export const withInfoPlist: ConfigPlugin<WithInfoPlistParams> = (
+/**
+ * 🤖 iOS Only
+ *
+ * A config plugin to set values in Info.plist
+ *
+ */
+export const withInfo: ConfigPlugin<WithInfoParams> = (
   config,
   { key, value }
 ) => {
-  config = withInfoPlistExpo(config, (config) => {
+  config = withInfoPlist(config, (config) => {
     config.modResults[key] = value as any;
     return config;
   });

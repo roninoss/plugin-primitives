@@ -21,6 +21,12 @@ type WithModifyFileParams =
       offset?: never;
     };
 
+/**
+ * 🤖 Android and 🍎 iOS
+ *
+ * A config plugin to modify files in the project
+ *
+ */
 export const withModifyFile: ConfigPlugin<WithModifyFileParams> = (
   config,
   params

@@ -10,13 +10,19 @@ export type ManifestCategory = keyof AndroidManifest["manifest"];
 
 type WithAndroidManifestParams = AndroidManifest["manifest"];
 
+/**
+ * 🤖 Android Only
+ *
+ * A config plugin to set values in AndroidManifest.xml
+ *
+ */
 export const withAndroidManifest: ConfigPlugin<WithAndroidManifestParams> = (
   config,
-  data
+  params
 ) => {
   return withAndroidManifestExpo(config, async (config) => {
     const androidManifest = config.modResults.manifest;
-    const categories = Object.keys(data) as ManifestCategory[];
+    const categories = Object.keys(params) as ManifestCategory[];
 
     categories.forEach((category) => {
       const categorySection = androidManifest[category];
@@ -25,7 +31,7 @@ export const withAndroidManifest: ConfigPlugin<WithAndroidManifestParams> = (
         Array.isArray(categorySection) &&
         categorySection.length > 0
       ) {
-        const attributes = Object.keys(data[category]!);
+        const attributes = Object.keys(params[category]!);
         attributes.forEach((attribute) => {
           // @ts-ignore
           categorySection.$[attribute] = data[category]![attribute];

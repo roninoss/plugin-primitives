@@ -65,6 +65,12 @@ function withCustomAssetIos(config: ExpoConfig, props: WithResourceFileProps) {
   });
 }
 
+/**
+ * 🤖 Android and 🍎 iOS
+ *
+ * A config plugin to add resource files to the project
+ *
+ */
 export const withResourceFile: ConfigPlugin<WithResourceFileProps> = (
   config,
   props

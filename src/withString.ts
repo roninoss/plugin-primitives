@@ -4,13 +4,19 @@ import {
   withStringsXml,
 } from "expo/config-plugins";
 
-type WithStringValueParams = {
+type WithStringParams = {
   key: string;
   value: string;
   translatable?: boolean;
 };
 
-export const withStringValue: ConfigPlugin<WithStringValueParams> = (
+/**
+ * 🤖 Android Only
+ *
+ * A config plugin to add strings to strings.xml
+ *
+ */
+export const withString: ConfigPlugin<WithStringParams> = (
   config,
   { key, value, translatable }
 ) => {

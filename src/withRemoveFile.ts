@@ -79,6 +79,12 @@ const withRemoveFileIos: ConfigPlugin<WithRemoveFileProps> = (
   });
 };
 
+/**
+ * 🤖 Android and 🍎 iOS
+ *
+ * A config plugin to remove files from the project
+ *
+ */
 export const withRemoveFile: ConfigPlugin<WithRemoveFileProps> = (
   config,
   props

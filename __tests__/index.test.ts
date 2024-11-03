@@ -5,11 +5,11 @@ import { withRemoveFile } from "../src/withRemoveFile";
 import { withModifyFile } from "../src/withModifyFile";
 import { withSourceFile } from "../src/withSourceFile";
 import { withResourceFile } from "../src/withResourceFile";
-import { withInfoPlist } from "../src/withInfoPlist";
+import { withInfo } from "../src/withInfo";
 import { withAndroidManifest } from "../src/withAndroidManifest";
 import { withEntitlement } from "../src/withEntitlement";
-import { withColorValue } from "../src/withColorValue";
-import { withStringValue } from "../src/withStringValue";
+import { withColor } from "../src/withColor";
+import { withString } from "../src/withString";
 
 // Mock fs-extra
 jest.mock("fs-extra");
@@ -98,13 +98,13 @@ describe("Config Plugins", () => {
     });
   });
 
-  describe("withInfoPlist", () => {
+  describe("withInfo", () => {
     it("should modify Info.plist values", () => {
       const props = {
         key: "CFBundleDisplayName",
         value: "Modified App Name",
       };
-      withInfoPlist(mockConfig, props);
+      withInfo(mockConfig, props);
 
       // Verify that withInfoPlist was called with correct parameters
       expect(mockConfig).toBeDefined();
@@ -140,28 +140,28 @@ describe("Config Plugins", () => {
     });
   });
 
-  describe("withColorValue", () => {
+  describe("withColor", () => {
     it("should set color value for light mode", () => {
       const props = {
         name: "primary_color",
         value: "#FF0000",
-        colorScheme: "light" as const,
+        night: true,
       };
-      withColorValue(mockConfig, props);
+      withColor(mockConfig, props);
 
       // Verify that withColorValue was called with correct parameters
       expect(mockConfig).toBeDefined();
     });
   });
 
-  describe("withStringValue", () => {
+  describe("withString", () => {
     it("should set string value in strings.xml", () => {
       const props = {
         key: "app_name",
         value: "Modified App Name",
         translatable: false,
       };
-      withStringValue(mockConfig, props);
+      withString(mockConfig, props);
 
       // Verify that withStringValue was called with correct parameters
       expect(mockConfig).toBeDefined();

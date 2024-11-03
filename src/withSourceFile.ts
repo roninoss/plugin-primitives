@@ -8,7 +8,7 @@ import {
 import path from "path";
 import fs from "fs";
 
-export type WithResourcesProps = {
+export type WithSourceFileProps = {
   filePath: string;
   contents?: string;
   parallelDir?: string;
@@ -35,7 +35,7 @@ async function getFileContents(
  * Add a build source file (ex: `AppDelegate.m`, `ViewController.swift`) to an Xcode project.
  * This is akin to creating a new code file in Xcode with `⌘+n`.
  */
-const withSourceIos: ConfigPlugin<WithResourcesProps> = (
+const withSourceIos: ConfigPlugin<WithSourceFileProps> = (
   config,
   { filePath, contents, parallelDir }
 ) => {
@@ -76,7 +76,7 @@ async function setFileInXcodeProjectAsync({
   return project;
 }
 
-const withSourceAndroid: ConfigPlugin<WithResourcesProps> = (
+const withSourceAndroid: ConfigPlugin<WithSourceFileProps> = (
   config,
   { filePath, contents, parallelDir }
 ) => {
@@ -98,7 +98,13 @@ const withSourceAndroid: ConfigPlugin<WithResourcesProps> = (
   ]);
 };
 
-export const withSourceFile: ConfigPlugin<WithResourcesProps> = (
+/**
+ * 🤖 Android and 🍎 iOS
+ *
+ * A config plugin to add source files to the project
+ *
+ */
+export const withSourceFile: ConfigPlugin<WithSourceFileProps> = (
   config,
   props
 ) => {

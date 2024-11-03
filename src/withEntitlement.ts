@@ -1,6 +1,6 @@
 import { ConfigPlugin, withEntitlementsPlist } from "expo/config-plugins";
 
-type WithEntitlementsParams =
+type WithEntitlementParams =
   | { key: "com.apple.developer.marketplace.app-installation"; value: boolean }
   | {
       key: "com.apple.developer.parent-application-identifiers";
@@ -185,7 +185,13 @@ type WithEntitlementsParams =
       value: string[];
     };
 
-export const withEntitlement: ConfigPlugin<WithEntitlementsParams> = (
+/**
+ * 🤖 iOS Only
+ *
+ * A config plugin to set entitlements in Info.plist
+ *
+ */
+export const withEntitlement: ConfigPlugin<WithEntitlementParams> = (
   config,
   { key, value }
 ) => {
