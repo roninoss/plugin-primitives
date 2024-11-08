@@ -2,20 +2,16 @@
 
 ## What is it?
 
-An open source collection of common plugin actions. Fully typed.
-
-## How it works
-
-<img src="./assets/docs.png" width="100%">
+An collection collection of common plugin actions. Fully typed.
 
 ## API
 
-### `withColorValue` 🤖
+### `withColor` 🤖
 
 Adds a color value to the project.
 
 ```javascript
-withColorValue(config, {
+withColor(config, {
   name: "primaryColor",
   value: "#000000",
   colorScheme: "dark",
@@ -34,35 +30,35 @@ withAndroidManifest(config, {
 });
 ```
 
-### `withStringValue` 🤖
+### `withString` 🤖
 
 Adds a string value to the project.
 
 ```javascript
-withStringValue(config, {
+withString(config, {
   name: "stringName",
   value: "Hello, world!",
   translatable: true,
 });
 ```
 
-### `withEntitlements` 🍎
+### `withEntitlement` 🍎
 
 Adds an entitlment to your app, allowing it to access a feature on the device.
 
 ```javascript
-withEntitlements(config, {
+withEntitlement(config, {
   key: "com.apple.developer.healthkit.access",
   value: "yes",
 });
 ```
 
-### `withInfoPlist` 🍎
+### `withInfo` 🍎
 
 Adds a key/value pair to the Info.plist file.
 
 ```javascript
-withInfoPlist(config, {
+withInfo(config, {
   key: "NSHealthShareUsageDescription",
   value: "We need access to your health data.",
 });

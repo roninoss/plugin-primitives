@@ -7,7 +7,7 @@ type WithModifyFileParams =
   | {
       filePath: string;
       newSrc: string;
-      anchor: string;
+      anchor: string | RegExp;
       offset: number;
       find?: never;
       replace?: never;

@@ -10,11 +10,22 @@ import { withAndroidManifest } from "../src/withAndroidManifest";
 import { withEntitlement } from "../src/withEntitlement";
 import { withColor } from "../src/withColor";
 import { withString } from "../src/withString";
+import { withXcodeProject } from "expo/config-plugins";
+import { withDangerousMod } from "expo/config-plugins";
 
 // Mock fs-extra
 jest.mock("fs-extra");
 // Mock @expo/config-plugins
 jest.mock("@expo/config-plugins");
+
+// Add this mock near the top with other mocks
+jest.mock("expo/config-plugins", () => ({
+  ...jest.requireActual("expo/config-plugins"),
+  withDangerousMod: jest.fn((config, [platform, callback]) => {
+    callback(config);
+    return config;
+  }),
+}));
 
 describe("Config Plugins", () => {
   let mockConfig: ExpoConfig;
@@ -30,14 +41,48 @@ describe("Config Plugins", () => {
 
   describe("withRemoveFile", () => {
     it("should remove iOS file from filesystem and Xcode project", () => {
+      // Mock fs functions
       const mockExistsSync = fs.existsSync as jest.Mock;
       mockExistsSync.mockReturnValue(true);
+
+      // Mock Xcode project structure
+      const mockXcodeProject = {
+        hash: {
+          project: {
+            objects: {
+              PBXGroup: {
+                groupId123: {
+                  children: [{ comment: "TestFile.swift" }],
+                },
+              },
+            },
+          },
+        },
+        getFirstTarget: jest.fn().mockReturnValue({ uuid: "target123" }),
+        removeSourceFile: jest.fn(),
+      };
+
+      // Mock withXcodeProject to provide the mock project
+      (withXcodeProject as jest.Mock).mockImplementation((config, callback) => {
+        return callback({
+          ...config,
+          modResults: mockXcodeProject,
+          modRequest: {
+            projectRoot: "/",
+          },
+        });
+      });
 
       const props = { filePath: "ios/TestFile.swift" };
       withRemoveFile(mockConfig, props);
 
-      expect(fs.existsSync).toHaveBeenCalledWith(props.filePath);
-      expect(fs.unlinkSync).toHaveBeenCalledWith(props.filePath);
+      expect(fs.existsSync).toHaveBeenCalledWith(
+        expect.stringContaining(props.filePath)
+      );
+      expect(fs.unlinkSync).toHaveBeenCalledWith(
+        expect.stringContaining(props.filePath)
+      );
+      expect(mockXcodeProject.removeSourceFile).toHaveBeenCalled();
     });
 
     it("should remove Android file from filesystem", () => {
@@ -57,6 +102,16 @@ describe("Config Plugins", () => {
       const mockReadFileSync = fs.readFileSync as jest.Mock;
       mockReadFileSync.mockReturnValue("original content");
 
+      // Add spy for withDangerousMod
+      const withDangerousModSpy = jest.spyOn(
+        require("expo/config-plugins"),
+        "withDangerousMod"
+      );
+
+      // spy on fs.readFileSync
+      const readFileSyncSpy = jest.spyOn(fs, "readFileSync");
+      readFileSyncSpy.mockReturnValue("original content");
+
       const props = {
         filePath: "ios/TestFile.swift",
         find: "original",
@@ -64,6 +119,8 @@ describe("Config Plugins", () => {
       };
       withModifyFile(mockConfig, props);
 
+      // Verify withDangerousMod was called
+      expect(withDangerousModSpy).toHaveBeenCalled();
       expect(fs.writeFileSync).toHaveBeenCalledWith(
         props.filePath,
         "modified content"
@@ -73,6 +130,38 @@ describe("Config Plugins", () => {
 
   describe("withSourceFile", () => {
     it("should add source file to iOS project", async () => {
+      // Mock Xcode project structure
+      const mockXcodeProject = {
+        hash: {
+          project: {
+            objects: {
+              PBXGroup: {
+                groupId123: {
+                  children: [],
+                },
+              },
+            },
+          },
+        },
+        getFirstTarget: jest.fn().mockReturnValue({ uuid: "target123" }),
+        hasFile: jest.fn().mockReturnValue(false),
+      };
+
+      // Mock withXcodeProject
+      (withXcodeProject as jest.Mock).mockImplementation((config, callback) => {
+        return callback({
+          ...config,
+          modResults: mockXcodeProject,
+          modRequest: {
+            projectRoot: "/",
+          },
+        });
+      });
+
+      // Mock fs functions
+      const mockWriteFileSync = fs.writeFileSync as jest.Mock;
+      mockWriteFileSync.mockImplementation(() => {});
+
       const props = {
         filePath: "ios/TestFile.swift",
         contents: "test content",
