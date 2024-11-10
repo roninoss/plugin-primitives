@@ -1,5 +1,6 @@
 import { ConfigPlugin, withDangerousMod } from "expo/config-plugins";
 import { mergeContents } from "@expo/config-plugins/build/utils/generateCode";
+import { format, parseXMLAsync } from "@expo/config-plugins/build/utils/XML";
 import fs from "fs";
 import path from "path";
 
@@ -35,8 +36,14 @@ export const withModifyFile: ConfigPlugin<WithModifyFileParams> = (
   const platform = params.filePath.includes("android") ? "android" : "ios";
   return withDangerousMod(config, [
     platform,
-    (config) => {
+    async (config) => {
       let fileContent = fs.readFileSync(params.filePath, "utf8");
+      // if this is an xml file, we need to parse it as xml first
+      if (path.basename(params.filePath) === "AndroidManifest.xml") {
+        const xml = await parseXMLAsync(fileContent);
+        const formattedXml = await format(xml);
+        fileContent = formattedXml;
+      }
 
       if ("find" in params) {
         fileContent = fileContent.replace(
