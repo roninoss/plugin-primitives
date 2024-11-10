@@ -5,8 +5,8 @@ import {
 } from "expo/config-plugins";
 
 type WithStringParams = {
-  key: string;
-  value: string;
+  name: string;
+  value?: string;
   translatable?: boolean;
 };
 
@@ -18,21 +18,28 @@ type WithStringParams = {
  */
 export const withString: ConfigPlugin<WithStringParams> = (
   config,
-  { key, value, translatable }
+  { name, value, translatable }
 ) => {
   return withStringsXml(config, (config) => {
-    config.modResults = AndroidConfig.Strings.setStringItem(
-      [
-        {
-          $: {
-            name: key,
-            translatable: translatable ? "true" : "false",
+    if (value === undefined) {
+      config.modResults = AndroidConfig.Strings.removeStringItem(
+        name,
+        config.modResults
+      );
+    } else {
+      config.modResults = AndroidConfig.Strings.setStringItem(
+        [
+          {
+            $: {
+              name,
+              translatable: translatable ? "true" : "false",
+            },
+            _: value,
           },
-          _: value,
-        },
-      ],
-      config.modResults
-    );
+        ],
+        config.modResults
+      );
+    }
     return config;
   });
 };

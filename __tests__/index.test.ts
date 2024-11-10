@@ -246,7 +246,7 @@ describe("Config Plugins", () => {
   describe("withString", () => {
     it("should set string value in strings.xml", () => {
       const props = {
-        key: "app_name",
+        name: "app_name",
         value: "Modified App Name",
         translatable: false,
       };

@@ -14,10 +14,10 @@ import {
 
 export const withColor: ConfigPlugin<{
   name: string;
-  value: string;
+  value?: string;
   night?: boolean;
 }> = (config, { name, value, night }) => {
-  if (night) {
+  if (!night) {
     config = withAndroidColors(config, (config) => {
       config.modResults = AndroidConfig.Colors.assignColorValue(
         config.modResults,
