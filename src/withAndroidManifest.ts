@@ -1,5 +1,4 @@
-// https://gist.github.com/djaffer/92260b643bd6e090b1d13291a7192a43
-
+import { ExpoConfig } from "@expo/config-types";
 import {
   AndroidManifest,
   ConfigPlugin,
@@ -7,38 +6,131 @@ import {
 } from "expo/config-plugins";
 
 export type ManifestCategory = keyof AndroidManifest["manifest"];
+type ManifestQueryIntent =
+  AndroidManifest["manifest"]["queries"][number]["intent"];
 
-type WithAndroidManifestParams = AndroidManifest["manifest"];
+type UsesPermissionModification = {
+  category: "uses-permission";
+  name: string;
+};
+
+type ApplicationModification = {
+  category: "application";
+  attribute: "meta-data" | "activity";
+};
+
+type QueriesModification = {
+  category: "queries";
+  package?: { name: string };
+  provider?: { authorities: string };
+  intent?: ManifestQueryIntent;
+};
+
+type UsesFeatureModification = {
+  category: "uses-feature";
+  name: string;
+  required?: boolean;
+};
+
+type PermissionModification = {
+  category: "permission";
+  name: string;
+  protectionLevel?: string;
+};
+
+type AndroidManifestParams =
+  | UsesPermissionModification
+  | ApplicationModification
+  | PermissionModification
+  | UsesFeatureModification
+  | QueriesModification;
 
 /**
  * 🤖 Android Only
  *
- * A config plugin to set values in AndroidManifest.xml
+ * A config plugin to apply a modification to AndroidManifest.xml
  *
  */
-export const withAndroidManifest: ConfigPlugin<WithAndroidManifestParams> = (
+export const withAndroidManifest: ConfigPlugin<AndroidManifestParams> = (
   config,
-  params
+  { category, ...rest }
 ) => {
   return withAndroidManifestExpo(config, async (config) => {
-    const androidManifest = config.modResults.manifest;
-    const categories = Object.keys(params) as ManifestCategory[];
-
-    categories.forEach((category) => {
-      const categorySection = androidManifest[category];
-      if (
-        categorySection &&
-        Array.isArray(categorySection) &&
-        categorySection.length > 0
-      ) {
-        const attributes = Object.keys(params[category]!);
-        attributes.forEach((attribute) => {
-          // @ts-ignore
-          categorySection.$[attribute] = data[category]![attribute];
+    if (category === "uses-permission") {
+      const { name } = rest as UsesPermissionModification;
+      const usesPermission =
+        config.modResults.manifest["uses-permission"] ?? [];
+      if (!usesPermission.find((p) => p?.$["android:name"] === name)) {
+        usesPermission.push({ $: { "android:name": name } });
+      }
+    } else if (category === "application") {
+      // const { attribute, value } = rest as ApplicationModification;
+      // const application = config.modResults.manifest.application ?? [];
+      // if (!application.find((p) => p?.$[attribute] === value)) {
+      //   // application.push({  });
+      // }
+    } else if (category === "permission") {
+      const { name, protectionLevel } = rest as PermissionModification;
+      const permission = config.modResults.manifest.permission ?? [];
+      if (!permission.find((p) => p?.$["android:name"] === name)) {
+        permission.push({
+          $: {
+            "android:name": name,
+            "android:protectionLevel": protectionLevel ?? "normal",
+          },
         });
       }
-    });
+    } else if (category === "uses-feature") {
+      const { name, required } = rest as UsesFeatureModification;
+      const usesFeature = config.modResults.manifest["uses-feature"] ?? [];
+      if (!usesFeature.find((p) => p?.$["android:name"] === name)) {
+        usesFeature.push({
+          $: {
+            "android:name": name,
+            "android:required": required ? "true" : "false",
+          },
+        });
+      }
+    } else if (category === "queries") {
+      const { intent, package: pkg, provider } = rest as QueriesModification;
+      const queries = config.modResults.manifest.queries ?? [];
 
+      if (pkg) {
+        queries.push({ package: [{ $: { "android:name": pkg.name } }] });
+      }
+      if (provider) {
+        queries.push({
+          provider: [{ $: { "android:authorities": provider.authorities } }],
+        });
+      }
+      if (intent) {
+        queries.push({
+          intent: intent,
+        });
+      }
+    }
     return config;
   });
 };
+
+withAndroidManifest({} as ExpoConfig, {
+  category: "permission",
+  name: "custom.permission",
+  protectionLevel: "normal",
+});
+
+withAndroidManifest({} as ExpoConfig, {
+  category: "uses-feature",
+  name: "android.permission.INTERNET",
+  required: true,
+});
+
+withAndroidManifest({} as ExpoConfig, {
+  category: "queries",
+  intent: [],
+});
+
+withAndroidManifest({} as ExpoConfig, {
+  category: "uses-permission",
+  name: "android.permission.INTERNET",
+});

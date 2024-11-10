@@ -24,7 +24,8 @@ type WithModifyFileParams =
 /**
  * 🤖 Android and 🍎 iOS
  *
- * A config plugin to modify files in the project
+ * A config plugin to apply file modifications.
+ * Supports line additions, deletions, and replacements.
  *
  */
 export const withModifyFile: ConfigPlugin<WithModifyFileParams> = (

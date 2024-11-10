@@ -13,7 +13,7 @@ type WithStringParams = {
 /**
  * 🤖 Android Only
  *
- * A config plugin to add strings to strings.xml
+ * A config plugin to add/remove/modify strings to strings.xml
  *
  */
 export const withString: ConfigPlugin<WithStringParams> = (

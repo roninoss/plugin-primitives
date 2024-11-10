@@ -188,7 +188,7 @@ type WithEntitlementParams =
 /**
  * 🤖 iOS Only
  *
- * A config plugin to set entitlements in Info.plist
+ * A config plugin to add/remove/modify entitlements in <projectName>.entitlements
  *
  */
 export const withEntitlement: ConfigPlugin<WithEntitlementParams> = (

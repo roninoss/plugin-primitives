@@ -26,11 +26,9 @@
   "files": [
     "build"
   ],
-  "dependencies": {
-    "@expo/config-types": "^51.0.3"
-  },
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
+    "@expo/config-types": "^51.0.3",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.14",
     "babel-jest": "^29.7.0",
@@ -44,5 +42,9 @@
     "expo": "*",
     "react": "*",
     "react-native": "*"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

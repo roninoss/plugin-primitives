@@ -44,7 +44,7 @@ type WithInfoParams =
 /**
  * 🤖 iOS Only
  *
- * A config plugin to set values in Info.plist
+ * A config plugin to add/remove/modify values in Info.plist
  *
  */
 export const withInfo: ConfigPlugin<WithInfoParams> = (

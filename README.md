@@ -1,8 +1,8 @@
-# Plugin Pro
+# Plugin Primitives
 
 ## What is it?
 
-An collection collection of common plugin actions. Fully typed.
+A collection of common config plugin primitives. Fully typed.
 
 ## API
 
@@ -24,9 +24,8 @@ Modify the AndroidManifest.xml file.
 
 ```javascript
 withAndroidManifest(config, {
-  $: { "xmlns:android": "http://schemas.android.com/apk/res/android" },
-  queries: [{ intent: "" }],
-  permission: [{ $: { "android:name": "" } }],
+  category: "uses-permission",
+  name: "android.permission.INTERNET",
 });
 ```
 
@@ -93,7 +92,7 @@ Apply modifications to a source file.
 
 ```javascript
 withSourceFile(config, {
-  filePath: "AppDelegate.m",
+  filePath: "ios/AppDelegate.m",
 });
 ```
 

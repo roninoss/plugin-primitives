@@ -15,7 +15,7 @@ import {
 export const withColor: ConfigPlugin<{
   name: string;
   value: string;
-  night: boolean;
+  night?: boolean;
 }> = (config, { name, value, night }) => {
   if (night) {
     config = withAndroidColors(config, (config) => {
