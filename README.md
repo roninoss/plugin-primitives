@@ -2,36 +2,25 @@
 
 ## What is it?
 
-A collection of common config plugin primitives. Fully typed.
+A collection of type-safe config plugin primitives that handle common native configuration tasks.
 
 ## API
 
 ### `withColor` 🤖
 
-Adds a color value to the project.
+Adds, modifies, or removes a color value to the `colors.xml` file. Supports both normal and night modes.
 
 ```javascript
 withColor(config, {
   name: "primaryColor",
   value: "#000000",
-  colorScheme: "dark",
-});
-```
-
-### `withAndroidManifest` 🤖
-
-Modify the AndroidManifest.xml file.
-
-```javascript
-withAndroidManifest(config, {
-  category: "uses-permission",
-  name: "android.permission.INTERNET",
+  night: true,
 });
 ```
 
 ### `withString` 🤖
 
-Adds a string value to the project.
+Adds, modifies, or removes a string value to the `strings.xml` file.
 
 ```javascript
 withString(config, {
@@ -43,7 +32,7 @@ withString(config, {
 
 ### `withEntitlement` 🍎
 
-Adds an entitlment to your app, allowing it to access a feature on the device.
+Adds, modifies, or removes an entitlement to your app, allowing it to access a feature on the device.
 
 ```javascript
 withEntitlement(config, {
@@ -54,7 +43,7 @@ withEntitlement(config, {
 
 ### `withInfo` 🍎
 
-Adds a key/value pair to the Info.plist file.
+Adds, modifies, or removes a key/value pair to the `Info.plist` file.
 
 ```javascript
 withInfo(config, {
@@ -88,17 +77,24 @@ withModifyFile(config, {
 
 ### `withSourceFile` 🤖 🍎
 
-Apply modifications to a source file.
+Apply modifications to a source file. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
 
 ```javascript
 withSourceFile(config, {
   filePath: "ios/AppDelegate.m",
+  contents: `
+    #import "AppDelegate.h"
+    #import <React/RCTBridge.h>
+    #import <React/RCTBundleURLProvider.h>
+    #import <React/RCTRootView.h>
+    ...
+  `,
 });
 ```
 
 ### `withResourceFile` 🤖 🍎
 
-Add a resource file to the project.
+Add a resource file to the project. Accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
 
 ```javascript
 withResourceFile(config, {
@@ -108,7 +104,7 @@ withResourceFile(config, {
 
 ### `withRemoveFile` 🤖 🍎
 
-Remove a file from the project.
+Removes a file and any references to it from the project.
 
 ```javascript
 withRemoveFile(config, {
@@ -118,7 +114,7 @@ withRemoveFile(config, {
 
 ### `withPlugins` 🤖 🍎
 
-Apply multiple plugins to the project.
+Applies multiple plugins.
 
 ```javascript
 withPlugins(config, [
@@ -129,3 +125,14 @@ withPlugins(config, [
   ],
 ]);
 ```
+
+<!-- ### `withAndroidManifest` 🤖
+
+Modify the AndroidManifest.xml file.
+
+```javascript
+withAndroidManifest(config, {
+  category: "uses-permission",
+  name: "android.permission.INTERNET",
+});
+``` -->

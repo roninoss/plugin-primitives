@@ -186,7 +186,7 @@ type WithEntitlementParams =
     };
 
 /**
- * 🤖 iOS Only
+ * 🍎 iOS Only
  *
  * A config plugin to add/remove/modify entitlements in <projectName>.entitlements
  *

@@ -51,14 +51,13 @@ function withCustomAssetIos(config: ExpoConfig, props: WithResourceFileProps) {
     copyFileSync(srcPath, destPath);
 
     const project = config.modResults;
-    const groupName = "Assets";
+    const groupName = config.modRequest.projectName ?? "Assets";
 
     IOSConfig.XcodeUtils.addResourceFileToGroup({
       filepath: destPath,
       groupName,
       project,
       isBuildFile: true,
-      verbose: true,
     });
 
     return config;

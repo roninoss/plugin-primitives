@@ -112,25 +112,3 @@ export const withAndroidManifest: ConfigPlugin<AndroidManifestParams> = (
     return config;
   });
 };
-
-withAndroidManifest({} as ExpoConfig, {
-  category: "permission",
-  name: "custom.permission",
-  protectionLevel: "normal",
-});
-
-withAndroidManifest({} as ExpoConfig, {
-  category: "uses-feature",
-  name: "android.permission.INTERNET",
-  required: true,
-});
-
-withAndroidManifest({} as ExpoConfig, {
-  category: "queries",
-  intent: [],
-});
-
-withAndroidManifest({} as ExpoConfig, {
-  category: "uses-permission",
-  name: "android.permission.INTERNET",
-});

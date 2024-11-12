@@ -42,7 +42,7 @@ type WithInfoParams =
   | { key: "branch_key" | (string & {}); value?: { live?: string } };
 
 /**
- * 🤖 iOS Only
+ * 🍎 iOS Only
  *
  * A config plugin to add/remove/modify values in Info.plist
  *

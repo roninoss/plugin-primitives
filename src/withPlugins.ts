@@ -6,6 +6,7 @@ import {
 import { ExpoConfig } from "expo/config";
 
 /**
+ * 🤖 Android and 🍎 iOS
  * A config plugin to conveniently aggregate multiple plugins
  */
 export const withPlugins: <const T extends unknown[]>(
