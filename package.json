@@ -1,6 +1,6 @@
 {
   "name": "@roninoss/plugin-primitives",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A collection of type-safe config plugin primitives that handle common native configuration tasks",
   "main": "build/index.js",
   "scripts": {
