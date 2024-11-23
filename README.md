@@ -52,6 +52,14 @@ withInfo(config, {
 });
 ```
 
+### `withPbxProject` 🍎
+
+Modify the `project.pbxproj` file. The plugin will use the `project.pbxproj` file found in the plugin's `parallelDir` directory, which defaults to `plugins` and overwrite the original file.
+
+```javascript
+withPbxProject(config);
+```
+
 ### `withModifyFile` 🤖 🍎
 
 Modify a file by finding and replacing a string.
@@ -77,7 +85,7 @@ withModifyFile(config, {
 
 ### `withSourceFile` 🤖 🍎
 
-Apply modifications to a source file. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
+Add a source file to the project. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
 
 ```javascript
 withSourceFile(config, {
@@ -119,10 +127,7 @@ Applies multiple plugins.
 ```javascript
 withPlugins(config, [
   [withEntitlement, { key: "aps-environment", value: "development" }],
-  [
-    withColorValue,
-    { name: "primaryColor", value: "#000000", colorScheme: "dark" },
-  ],
+  [withColor, { name: "primaryColor", value: "#000000", dark: true }],
 ]);
 ```
 

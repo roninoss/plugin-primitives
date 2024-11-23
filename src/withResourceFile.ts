@@ -7,7 +7,7 @@ import {
   withXcodeProject,
 } from "expo/config-plugins";
 import { ExpoConfig } from "@expo/config-types";
-import { copyFileSync } from "fs-extra";
+import { copyFileSync, ensureDirSync } from "fs-extra";
 import * as path from "path";
 
 export type WithResourceFileProps = {
@@ -47,7 +47,7 @@ function withCustomAssetIos(config: ExpoConfig, props: WithResourceFileProps) {
       props.parallelDir ?? "plugins",
       props.filePath
     );
-
+    ensureDirSync(path.dirname(destPath));
     copyFileSync(srcPath, destPath);
 
     const project = config.modResults;
