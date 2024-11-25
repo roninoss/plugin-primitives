@@ -89,7 +89,7 @@ This is primaririly used to modify unstructured files that don't have a specific
 
 ### `withSourceFile` 🤖 🍎
 
-Adds a source file to the project. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` directory structure.
+Adds a source file to the project. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` or `android` directory structure.
 
 ```javascript
 withSourceFile(config, {
@@ -113,7 +113,7 @@ plugins/
 
 ### `withResourceFile` 🤖 🍎
 
-Add a resource file to the project. Accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` directory structure.
+Add a resource file to the project. Accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` or `android` directory structure.
 
 ```javascript
 withResourceFile(config, {
@@ -154,13 +154,13 @@ withRemoveFile(config, {
 
 ### `withPlugins` 🤖 🍎
 
-Applies multiple plugins.
+Applies multiple plugins. Accepts an array of plugins, where each element is either a plugin or a tuple of a plugin and its (type-safe) options.
 
 ```javascript
 withPlugins(config, [
   withPbxProject,
   [withEntitlement, { key: "aps-environment", value: "development" }],
-  [withColor, { name: "primaryColor", value: "#000000", dark: true }],
+  [withColor, { name: "primaryColor", value: "#000000", night: true }],
 ]);
 ```
 
