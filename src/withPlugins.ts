@@ -2,7 +2,6 @@ import {
   ConfigPlugin,
   withPlugins as withPluginsExpo,
 } from "expo/config-plugins";
-
 import { ExpoConfig } from "expo/config";
 
 /**
@@ -11,7 +10,9 @@ import { ExpoConfig } from "expo/config";
  */
 export const withPlugins: <const T extends unknown[]>(
   config: ExpoConfig,
-  plugins: { [k in keyof T]: [ConfigPlugin<T[k]>, T[k]] }
+  plugins: {
+    [k in keyof T]: [ConfigPlugin<T[k]>, T[k]] | ConfigPlugin<T[k]>;
+  }
 ) => ExpoConfig = (config, plugins) => {
   return withPluginsExpo(config, plugins);
 };

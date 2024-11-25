@@ -10,3 +10,5 @@ export { withSourceFile } from "./withSourceFile";
 export { withRemoveFile } from "./withRemoveFile";
 
 export { withPlugins } from "./withPlugins";
+
+export { withPbxProject } from "./withPbxProject";

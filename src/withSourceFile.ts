@@ -7,6 +7,7 @@ import {
 } from "expo/config-plugins";
 import path from "path";
 import fs from "fs";
+import { ensureDirSync } from "fs-extra";
 
 export type WithSourceFileProps = {
   filePath: string;
@@ -71,6 +72,7 @@ async function setFileInXcodeProjectAsync({
   }
 
   // Write contents to the file
+  ensureDirSync(path.dirname(file));
   fs.writeFileSync(file, contents);
 
   return project;

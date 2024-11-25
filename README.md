@@ -8,7 +8,7 @@ A collection of type-safe config plugin primitives that handle common native con
 
 ### `withColor` 🤖
 
-Adds, modifies, or removes a color value to the `colors.xml` file. Supports both normal and night modes.
+Adds, modifies, or removes a color value from the `colors.xml` file. Supports both normal and night modes.
 
 ```javascript
 withColor(config, {
@@ -20,7 +20,7 @@ withColor(config, {
 
 ### `withString` 🤖
 
-Adds, modifies, or removes a string value to the `strings.xml` file.
+Adds, modifies, or removes a string value from the `strings.xml` file.
 
 ```javascript
 withString(config, {
@@ -52,54 +52,94 @@ withInfo(config, {
 });
 ```
 
+### `withPbxProject` 🍎
+
+Modifies the `project.pbxproj` file by overwritting it with an updated version. The plugin will use the `project.pbxproj` file found in the `parallelDir` directory, which defaults to `plugins` and overwitten. This ensures that the iOS project is always in a consistent state.
+
+```javascript
+withPbxProject(config);
+```
+
 ### `withModifyFile` 🤖 🍎
 
-Modify a file by finding and replacing a string.
+Modifies an arbitrary file by
+
+1. Finding and replacing a string
 
 ```javascript
 withModifyFile(config, {
-  filePath: "AppDelegate.m",
+  filePath: "ios/AppDelegate.m",
   find: "something",
   replace: "something else",
 });
 ```
 
-Or insert a string at a specific anchor and offset.
+2. Inserting a string at a specific anchor and offset
 
 ```javascript
 withModifyFile(config, {
-  filePath: "AppDelegate.m",
+  filePath: "ios/myapp/AppDelegate.mmm",
   newSrc: "hello",
   anchor: "something",
-  offset: 10,
+  offset: 0,
 });
 ```
 
+This is primaririly used to modify unstructured files that don't have a specific format. For structured files, use more specific plugins like `withInfo`, `withColor`, etc.
+
 ### `withSourceFile` 🤖 🍎
 
-Apply modifications to a source file. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
+Adds a source file to the project. Accepts an optional `contents` parameter to specify the contents of the file. If not provided, the contents will be read from the file at `plugins/<filePath>`. Also accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` directory structure.
 
 ```javascript
 withSourceFile(config, {
-  filePath: "ios/AppDelegate.m",
-  contents: `
-    #import "AppDelegate.h"
-    #import <React/RCTBridge.h>
-    #import <React/RCTBundleURLProvider.h>
-    #import <React/RCTRootView.h>
-    ...
-  `,
+  filePath: "ios/myapp/NewFile.swift",
 });
+```
+
+Example file structure:
+
+```
+ios/
+├── myapp/
+│   ├── NewFile.swift
+|   └── ...
+plugins/
+├── ios/
+│   └── myapp/
+│       └── NewFile.swift
+└── ...
 ```
 
 ### `withResourceFile` 🤖 🍎
 
-Add a resource file to the project. Accepts an optional `parallelDir` parameter to specify a directory (relative to the project root) to place the file in, which defaults to `plugins`.
+Add a resource file to the project. Accepts an optional `parallelDir` parameter (which defaults to `plugins`) to specify a directory (relative to the project root) to place the file in. The parallel directory mirrors the `ios` directory structure.
 
 ```javascript
 withResourceFile(config, {
   filePath: "android/src/main/res/values/strings2.xml",
 });
+```
+
+Example file structure:
+
+```
+android/
+├── src/
+|   ├── ...
+│   └── main/
+│       └── res/
+│           └── values/
+│               └── strings2.xml
+|
+plugins/
+├── android/
+│   └── src/
+│       └── main/
+│           └── res/
+│               └── values/
+│                   └── strings2.xml
+└── ...
 ```
 
 ### `withRemoveFile` 🤖 🍎
@@ -118,11 +158,9 @@ Applies multiple plugins.
 
 ```javascript
 withPlugins(config, [
+  withPbxProject,
   [withEntitlement, { key: "aps-environment", value: "development" }],
-  [
-    withColorValue,
-    { name: "primaryColor", value: "#000000", colorScheme: "dark" },
-  ],
+  [withColor, { name: "primaryColor", value: "#000000", dark: true }],
 ]);
 ```
 

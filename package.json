@@ -1,6 +1,6 @@
 {
   "name": "@roninoss/plugin-primitives",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A collection of type-safe config plugin primitives that handle common native configuration tasks",
   "main": "build/index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "@babel/preset-env": "^7.26.0",
+    "@bacons/xcode": "1.0.0-alpha.15",
     "@expo/config-types": "^51.0.3",
     "@types/fs-extra": "^11.0.4",
     "@types/jest": "^29.5.14",
@@ -46,5 +47,8 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "xcode": "^3.0.1"
   }
 }

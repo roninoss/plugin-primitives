@@ -6,7 +6,7 @@ import { withModifyFile } from "../src/withModifyFile";
 import { withSourceFile } from "../src/withSourceFile";
 import { withResourceFile } from "../src/withResourceFile";
 import { withInfo } from "../src/withInfo";
-import { withAndroidManifest } from "../src/withAndroidManifest";
+// import { withAndroidManifest } from "../src/withAndroidManifest";
 import { withEntitlement } from "../src/withEntitlement";
 import { withColor } from "../src/withColor";
 import { withString } from "../src/withString";
